@@ -6,3 +6,4 @@ retry-requests
 langchain-google-genai
 pypdf
 python-dotenv
+pymongo

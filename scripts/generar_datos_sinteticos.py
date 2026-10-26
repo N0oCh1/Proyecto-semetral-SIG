@@ -1,4 +1,4 @@
-"""Genera datos sintéticos mensuales (2024-2025) de maíz, arroz y café por región de Panamá.
+"""Genera datos sintéticos mensuales (año agrícola 2025-2026) de maíz, arroz y café por región de Panamá.
 
 Base real (MIDA, año agrícola 2025-2026): los documentos JSON de data/semiestructurado/,
 extraídos de los PDF de data/Documento_referencia/ (superficie y rendimiento por región, costo por
@@ -16,9 +16,9 @@ import numpy as np
 import pandas as pd
 
 SEMILLA = 2025
-ANIOS = (2024, 2025)
+ANIO_AGRICOLA = 2025  # mayo 2025 - abril 2026
 ENTRADA = Path("data/semiestructurado")
-SALIDA = "data/estructurado/produccion_mensual_2024_2025.csv"
+SALIDA = "data/estructurado/produccion_mensual_2025_2026.csv"
 
 # Supuesto de la simulación (no viene de los PDF): parte de la cosecha anual que cae en cada mes
 COSECHA = {
@@ -46,11 +46,11 @@ def generar(docs):
     for cultivo, calendario in COSECHA.items():
         doc = docs[cultivo]
         for r in doc["regiones"]:
-            for anio in ANIOS:
-                for mes, peso in calendario.items():
-                    filas.append(dict(anio=anio, mes=mes, region=r["region"], cultivo=cultivo,
-                                      sistema=doc["sistema"], ha_cosechadas=r["ha_cosechar"] * peso,
-                                      rend_base=r["rendimiento_qq_ha"]))
+            for mes, peso in calendario.items():
+                anio = ANIO_AGRICOLA if mes >= 5 else ANIO_AGRICOLA + 1
+                filas.append(dict(anio=anio, mes=mes, region=r["region"], cultivo=cultivo,
+                                  sistema=doc["sistema"], ha_cosechadas=r["ha_cosechar"] * peso,
+                                  rend_base=r["rendimiento_qq_ha"]))
     df = pd.DataFrame(filas)
 
     par = df.cultivo.map(docs)
@@ -81,16 +81,16 @@ if __name__ == "__main__":
     docs = cargar_cultivos()
     df = generar(docs)
 
-    # Autochequeo: cada año reparte toda la superficie del MIDA y no hay huecos
+    # Autochequeo: el año agrícola reparte toda la superficie del MIDA y no hay huecos
     ha_mida = {(d["cultivo"], r["region"]): r["ha_cosechar"] for d in docs.values() for r in d["regiones"]}
-    ha = df.groupby(["cultivo", "region", "anio"]).ha_cosechadas.sum()
-    for (cultivo, region, _), total in ha.items():
+    ha = df.groupby(["cultivo", "region"]).ha_cosechadas.sum()
+    for (cultivo, region), total in ha.items():
         assert abs(total - ha_mida[cultivo, region]) < 0.1, (cultivo, region, total)
     assert df.drop(columns=["precio_qq", "valor_produccion", "margen_qq"]).notna().all().all()
 
     df.to_csv(SALIDA, index=False, date_format="%Y-%m-%d")
 
-    resumen = df.groupby(["cultivo", "anio"]).agg(ha=("ha_cosechadas", "sum"), qq=("produccion_qq", "sum"),
+    resumen = df.groupby("cultivo").agg(ha=("ha_cosechadas", "sum"), qq=("produccion_qq", "sum"),
                                                   costo=("costo_total", "sum"))
     resumen["rend_qq_ha"] = resumen.qq / resumen.ha
     resumen["costo_qq"] = resumen.costo / resumen.qq
