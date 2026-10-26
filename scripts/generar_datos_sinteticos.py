@@ -66,7 +66,7 @@ def generar(docs):
     df["costo_ha"] = (fijo + var_qq * df.rendimiento_qq_ha) * rng.normal(1, 0.03, len(df))
     df["costo_total"] = df.costo_ha * df.ha_cosechadas
     df["costo_qq"] = df.costo_ha / df.rendimiento_qq_ha
-    # precio_qq null en el JSON (maíz) queda vacío en el CSV
+    # precio_qq null en el JSON queda vacío en el CSV
     df["precio_qq"] = par.map(lambda d: d["analisis_economico"]["precio_qq"]).astype(float)
     df["valor_produccion"] = df.produccion_qq * df.precio_qq
     df["margen_qq"] = df.precio_qq - df.costo_qq

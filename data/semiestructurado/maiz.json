@@ -5,7 +5,8 @@
   "moneda": "B/.",
   "fuente": {
     "costos": "Costo-normativo-maiz-2025-026.pdf, pág. 1",
-    "regiones": "Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf, pág. 2"
+    "regiones": "Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf, pág. 2",
+    "precio": "No viene del PDF: precio de mercado 15-18 B/./qq, el grupo usa 17 B/./qq"
   },
   "costo_ha": {
     "total": 2250.06,
@@ -25,7 +26,7 @@
   },
   "analisis_economico": {
     "rendimiento_esperado_qq_ha": 113,
-    "precio_qq": null,
+    "precio_qq": 17.0,
     "nota": "El PDF no trae análisis económico; 113 qq/ha es la cantidad que usa para el transporte de la cosecha."
   },
   "otros_sistemas": [

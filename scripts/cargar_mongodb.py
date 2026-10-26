@@ -45,7 +45,7 @@ def leer_fichas(carpeta):
 
 def leer_csv(ruta):
     df = pd.read_csv(ruta, parse_dates=["fecha"])
-    # NaN (precio del maíz, días sin dato de clima) no es un valor válido en MongoDB: se guarda como null
+    # NaN (precio faltante, días sin dato de clima) no es un valor válido en MongoDB: se guarda como null
     return df.astype(object).where(df.notna(), None).to_dict("records")
 
 
