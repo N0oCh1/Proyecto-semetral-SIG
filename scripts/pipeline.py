@@ -5,6 +5,7 @@
   3. Extracción: clima diario por región desde Open-Meteo (data/estructurado/)
   4. Almacenamiento: todo a MongoDB
   5. Transformación en MongoDB: pipelines de agregación -> colecciones de KPI (mongodb/pipelines/)
+  6. Exportación: KPI de MongoDB -> PostgreSQL (Docker) para Power BI
 
 Ejecutar desde la raíz del repo:
     python scripts/pipeline.py           # todo
@@ -21,6 +22,7 @@ PASOS = [
     ("Descargar clima por región", "scripts/descargar_clima.py"),
     ("Cargar en MongoDB", "scripts/cargar_mongodb.py"),
     ("Calcular KPI en MongoDB", "mongodb/transformar_kpi.py"),
+    ("Exportar KPI a PostgreSQL", "scripts/exportar_postgres.py"),
 ]
 
 if __name__ == "__main__":
