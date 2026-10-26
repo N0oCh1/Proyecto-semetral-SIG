@@ -1,0 +1,28 @@
+{
+  "descripcion": "Producción mensual + clima del mismo mes y región. Para tendencias por mes y clima vs rendimiento.",
+  "origen": "produccion_mensual",
+  "pipeline": [
+    {"$lookup": {
+      "from": "clima_mensual",
+      "localField": "region",
+      "foreignField": "region",
+      "let": {"fecha": "$fecha"},
+      "pipeline": [{"$match": {"$expr": {"$eq": ["$fecha", "$$fecha"]}}}],
+      "as": "clima"
+    }},
+    {"$unwind": {"path": "$clima", "preserveNullAndEmptyArrays": true}},
+    {"$project": {
+      "_id": 0,
+      "fecha": 1, "anio": 1, "mes": 1, "region": 1, "cultivo": 1, "sistema": 1,
+      "ha_cosechadas": 1, "rendimiento_qq_ha": 1, "produccion_qq": 1,
+      "costo_ha": 1, "costo_total": 1, "costo_qq": 1,
+      "precio_qq": 1, "valor_produccion": 1, "margen_qq": 1,
+      "margen_total": {"$round": [{"$subtract": ["$valor_produccion", "$costo_total"]}, 2]},
+      "lluvia_mm": "$clima.lluvia_mm",
+      "dias_lluvia": "$clima.dias_lluvia",
+      "temp_media_c": "$clima.temp_media_c"
+    }},
+    {"$sort": {"fecha": 1, "cultivo": 1, "region": 1}},
+    {"$out": "kpi_mensual"}
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "cultivo": "Arroz",
+  "sistema": "Mecanizado en secano",
+  "anio_agricola": "2025-2026",
+  "moneda": "B/.",
+  "fuente": {
+    "costos": "Costos-de-arroz-mecanizado-en-secano-2025-2026.pdf, pág. 1",
+    "regiones": "Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf, pág. 1",
+    "extraido_con": "gemini-3.5-flash"
+  },
+  "costo_ha": {
+    "total": 2508.01,
+    "rubros": {
+      "preparacion_de_suelo_y_equipamiento": 619.15,
+      "insumos": 1059.97,
+      "mano_de_obra": 61.52,
+      "otros_gastos": 466.95,
+      "recargos": {
+        "asistencia_tecnica_privada": 52.22,
+        "imprevisto": 94.95,
+        "seguro_agricola": 132.93,
+        "intereses": 20.32
+      }
+    },
+    "por_qq_cosechado": 1.25
+  },
+  "analisis_economico": {
+    "rendimiento_esperado_qq_ha": 105.0,
+    "precio_qq": 27.0
+  },
+  "regiones": [
+    {
+      "region": "Chiriquí",
+      "productores": 460,
+      "ha_cosechar": 20500.0,
+      "rendimiento_qq_ha": 100.0
+    },
+    {
+      "region": "Veraguas",
+      "productores": 201,
+      "ha_cosechar": 12060.0,
+      "rendimiento_qq_ha": 96.7
+    },
+    {
+      "region": "Herrera",
+      "productores": 53,
+      "ha_cosechar": 2750.0,
+      "rendimiento_qq_ha": 105.0
+    },
+    {
+      "region": "Coclé",
+      "productores": 266,
+      "ha_cosechar": 7897.1,
+      "rendimiento_qq_ha": 91.1
+    },
+    {
+      "region": "Panamá Oeste",
+      "productores": 8,
+      "ha_cosechar": 270.0,
+      "rendimiento_qq_ha": 90.2
+    },
+    {
+      "region": "Panamá Este",
+      "productores": 170,
+      "ha_cosechar": 18000.0,
+      "rendimiento_qq_ha": 105.0
+    },
+    {
+      "region": "Los Santos",
+      "productores": 150,
+      "ha_cosechar": 11132.0,
+      "rendimiento_qq_ha": 105.0
+    },
+    {
+      "region": "Darién",
+      "productores": 108,
+      "ha_cosechar": 11000.0,
+      "rendimiento_qq_ha": 100.0
+    }
+  ]
+}

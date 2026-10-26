@@ -1,2 +1,9 @@
 numpy
 pandas
+openmeteo-requests
+requests-cache
+retry-requests
+langchain-google-genai
+pypdf
+python-dotenv
+pymongo

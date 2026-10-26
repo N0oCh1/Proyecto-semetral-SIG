@@ -219,3 +219,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Caché de Open-Meteo (scripts/descargar_clima.py)
+.cache.sqlite
