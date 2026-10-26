@@ -54,7 +54,7 @@ El archivo `.env` no se sube a GitHub; cada integrante usa su propia key.
 
 ## Todo de una vez (pipeline)
 
-Corre los pasos 3 a 7 en orden y se detiene si alguno falla:
+Corre los pasos 3 a 8 en orden y se detiene si alguno falla (el paso 8 necesita PostgreSQL levantado con `docker compose up -d`):
 
 ```powershell
 python scripts/pipeline.py           # todo
@@ -120,6 +120,31 @@ Ejecuta en orden los pipelines de agregación de `mongodb/pipelines/` (cada uno 
 **Alcance:** los informes del MIDA son de producción y mercado **nacional** (Panamá), no de exportación. "Nacional" en `kpi_cultivo` es la suma de las regiones del país, y los precios son precios al productor en el mercado interno, no precios internacionales.
 
 Los promedios se calculan con totales (p. ej. costo/qq = costo total / producción total), no promediando los meses. Si un cultivo no tiene precio, su valor, margen y rentabilidad quedan en `null`. El precio del maíz (17 B/./qq) no viene del PDF: es un supuesto del grupo dentro del rango de mercado de 15–18 B/./qq, anotado en `data/semiestructurado/maiz.json`.
+
+## PostgreSQL en Docker
+
+Requiere Docker Desktop abierto. Poner una contraseña en `POSTGRES_PASSWORD` del `.env` (ver `.env.example`) y:
+
+```powershell
+docker compose up -d --build   # levanta PostgreSQL en localhost:5432
+docker compose down            # lo detiene (los datos quedan en el volumen pgdata)
+docker compose down -v         # lo detiene y BORRA los datos
+```
+
+- Imagen: `postgres/Dockerfile` (PostgreSQL 17, zona horaria de Panamá). Los `.sql` de `postgres/init/` corren solo la primera vez que se crea la base; hoy crean el esquema `agro`.
+- Conexión: host `localhost`, puerto `5432`, base `agro_panama`, usuario `sig` (o lo que diga el `.env`).
+
+## 8. Exportar los KPI a PostgreSQL (para Power BI)
+
+El cluster gratuito de MongoDB Atlas no tiene Atlas SQL, así que Power BI lee los KPI desde PostgreSQL:
+
+```powershell
+docker compose up -d                  # si PostgreSQL no está levantado
+python scripts/exportar_postgres.py
+```
+
+- Copia `kpi_cultivo`, `kpi_cultivo_region`, `kpi_mensual` y `clima_mensual` de MongoDB al esquema `agro` de PostgreSQL, y crea `agro.regiones` con la latitud y longitud de cada región (para el mapa). Reemplaza las tablas en cada corrida.
+- En Power BI: **Obtener datos → Base de datos PostgreSQL**, servidor `localhost:5432`, base `agro_panama`, usuario y contraseña del `.env`; elegir las tablas `agro.*`. Relacionar las tablas por `region` con `agro.regiones`.
 
 # Requisitos del proyecto final
 
