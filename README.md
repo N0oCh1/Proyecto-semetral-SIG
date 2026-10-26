@@ -18,13 +18,60 @@ Como empresa del sector agropecuario en Panamá, se quiere comparar los costos d
 
 ## Qué contendrá
 
-- Tablas en PDF del MIDA, año agrícola 2025–2026 (`data/no_estructurado/`):
+- Tablas en PDF del MIDA, año agrícola 2025–2026 (`data/Documento_referencia/`):
   - `Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf`: productores, superficie, producción (qq) y rendimiento (qq/ha) por región y sistema de cultivo. Son **proyecciones**, no cosechas reales.
   - `Costo-normativo-maiz-2025-026.pdf`: costo por hectárea del maíz mecanizado y a chuzo con tecnología (y del sorgo, que no se usa).
   - `Costos-de-arroz-mecanizado-en-secano-2025-2026.pdf`: costo por hectárea, rendimiento y precio esperados del arroz en secano.
   - `Costo-normativo-cafe-2025-2026.pdf`: costo por hectárea del café robusta en sus primeros 5 años, solo y asociado con plátano.
-- Datos sintéticos mensuales 2024–2025 (`data/estructurado/produccion_mensual_2024_2025.csv`), generados con `python scripts/generar_datos_sinteticos.py` a partir de los PDF: hectáreas, rendimiento, producción, costos, precio y margen por región, cultivo y mes. La superficie anual es la del MIDA; el reparto mensual (calendario de cosecha) y la variación del rendimiento y del costo son simulados.
+- JSON por cultivo extraídos de los PDF con IA generativa: `python scripts/extraer_json_pdf.py` (LangChain + Gemini, requiere `GOOGLE_API_KEY`). Guarda en `data/semiestructurado/ia/` y compara con los JSON copiados a mano de `data/semiestructurado/`.
+- Datos sintéticos mensuales 2024–2025 (`data/estructurado/produccion_mensual_2024_2025.csv`), generados con `python scripts/generar_datos_sinteticos.py` a partir de los JSON de `data/semiestructurado/`: hectáreas, rendimiento, producción, costos, precio y margen por región, cultivo y mes. La superficie anual es la del MIDA; el reparto mensual (calendario de cosecha) y la variación del rendimiento y del costo son simulados.
 - Clima diario de Panamá (`data/weather_URL_panama_2016_2017.py`, API de Open-Meteo).
+
+# Cómo ejecutar
+
+Todos los comandos se corren en PowerShell desde la carpeta raíz del proyecto.
+
+## 1. Preparar el entorno (solo la primera vez)
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+- Si ya existe la carpeta `.venv`, saltar el primer comando.
+- Si `Activate.ps1` da error de "ejecución de scripts deshabilitada", correr una vez `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` y volver a activar.
+- En las siguientes sesiones basta con activar el entorno: `.venv\Scripts\Activate.ps1` (la terminal muestra `(.venv)` al inicio).
+
+## 2. Configurar la API key de Gemini (solo la primera vez)
+
+1. Crear una API key en <https://aistudio.google.com/apikey>.
+2. Copiar la plantilla: `Copy-Item .env.example .env`
+3. Abrir `.env` y pegar la key en `GOOGLE_API_KEY=`.
+
+El archivo `.env` no se sube a GitHub; cada integrante usa su propia key.
+
+## 3. Extraer los JSON de los PDF con IA
+
+```powershell
+python scripts/extraer_json_pdf.py          # los tres cultivos
+python scripts/extraer_json_pdf.py cafe     # solo uno: arroz, maiz o cafe
+```
+
+- Entrada: los PDF de `data/Documento_referencia/`.
+- Salida: `data/semiestructurado/ia/{arroz,maiz,cafe}.json`.
+- El script muestra cuántos valores coinciden con los JSON copiados a mano y cuáles no. Si los rubros de costo no suman el total, no guarda ese JSON.
+- Para que el paso 4 use los JSON de la IA, revisarlos y copiarlos de `data/semiestructurado/ia/` a `data/semiestructurado/`.
+
+## 4. Generar los datos mensuales
+
+```powershell
+python scripts/generar_datos_sinteticos.py
+```
+
+- Entrada: `data/semiestructurado/*.json`.
+- Salida: `data/estructurado/produccion_mensual_2024_2025.csv`.
+- Usa una semilla fija: siempre genera el mismo archivo con los mismos JSON. No necesita API key ni internet.
 
 # Requisitos del proyecto final
 
@@ -41,9 +88,9 @@ Resumen de lo que pide el documento *Proyecto Final de Sistemas de Información 
 ## Requisitos tecnológicos
 
 - [ ] Gestionar **al menos 3 tipos de datos distintos** en estructura y formato. Lo que ya se tiene:
-  - No estructurado: PDF del MIDA con las proyecciones y los costos (`data/no_estructurado/`).
-  - Semiestructurado: JSON del clima de la API de Open-Meteo (`data/weather_URL_panama_2016_2017.py`).
-  - Estructurado (pendiente): por ejemplo, la serie histórica de producción del INEC en CSV o Excel.
+  - No estructurado: PDF del MIDA con las proyecciones y los costos (`data/Documento_referencia/`).
+  - Semiestructurado: un JSON por cultivo con los valores de los PDF (`data/semiestructurado/`): costo por hectárea desglosado por rubro, análisis económico y superficie y rendimiento por región. Cada cultivo tiene su propia forma (el café trae el ciclo de 5 años; el maíz, otros sistemas).
+  - Estructurado: CSV mensual generado a partir de los JSON (`data/estructurado/produccion_mensual_2024_2025.csv`).
 - [ ] Orquestación de procesos de datos.
 - [ ] Integración con **AWS o MongoDB**.
 - [ ] Inteligencia artificial generativa u otra técnica de IA (por ejemplo, predecir el rendimiento de un cultivo según el clima).

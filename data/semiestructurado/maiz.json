@@ -1,0 +1,41 @@
+{
+  "cultivo": "Maíz",
+  "sistema": "Mecanizado",
+  "anio_agricola": "2025-2026",
+  "moneda": "B/.",
+  "fuente": {
+    "costos": "Costo-normativo-maiz-2025-026.pdf, pág. 1",
+    "regiones": "Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf, pág. 2"
+  },
+  "costo_ha": {
+    "total": 2250.06,
+    "rubros": {
+      "preparacion_suelo_y_equipo": 609.75,
+      "insumos": 923.90,
+      "mano_de_obra": 64.00,
+      "otros_gastos": 433.60,
+      "recargos": {
+        "imprevisto": 79.88,
+        "asistencia_tecnica": 51.94,
+        "seguro_agricola": 67.14,
+        "intereses": 19.85
+      }
+    },
+    "por_qq_cosechado": 1.00
+  },
+  "analisis_economico": {
+    "rendimiento_esperado_qq_ha": 113,
+    "precio_qq": null,
+    "nota": "El PDF no trae análisis económico; 113 qq/ha es la cantidad que usa para el transporte de la cosecha."
+  },
+  "otros_sistemas": [
+    {"sistema": "Chuzo con tecnología", "costo_ha_total": 1777.81, "fuente": "Costo-normativo-maiz-2025-026.pdf, pág. 2"}
+  ],
+  "regiones": [
+    {"region": "Chiriquí", "productores": 40, "ha_cosechar": 500, "rendimiento_qq_ha": 75.0},
+    {"region": "Veraguas", "productores": 5, "ha_cosechar": 74.4, "rendimiento_qq_ha": 75.0},
+    {"region": "Herrera", "productores": 100, "ha_cosechar": 2000, "rendimiento_qq_ha": 106.0},
+    {"region": "Los Santos", "productores": 570, "ha_cosechar": 15000, "rendimiento_qq_ha": 115.0},
+    {"region": "Darién", "productores": 25, "ha_cosechar": 35, "rendimiento_qq_ha": 79.9}
+  ]
+}

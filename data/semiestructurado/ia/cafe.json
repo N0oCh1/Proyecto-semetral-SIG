@@ -1,0 +1,93 @@
+{
+  "cultivo": "Café",
+  "sistema": "Tecnificado (robusta, año 5)",
+  "anio_agricola": "2025-2026",
+  "moneda": "B/.",
+  "fuente": {
+    "costos": "Costo-normativo-cafe-2025-2026.pdf, pág. 2",
+    "regiones": "Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf, pág. 10",
+    "extraido_con": "gemini-3.5-flash"
+  },
+  "costo_ha": {
+    "total": 6476.19,
+    "rubros": {
+      "equipos_y_herramientas": 30.0,
+      "insumos": 1851.0,
+      "mano_de_obra": 3306.55,
+      "otros_gastos": 350.0,
+      "recargos": {
+        "asistencia_tecnica": 155.63,
+        "imprevisto": 276.88,
+        "seguro_agricola": 387.63,
+        "interes": 118.5
+      }
+    },
+    "por_qq_cosechado": 42.857142857142854
+  },
+  "analisis_economico": {
+    "rendimiento_esperado_qq_ha": 70.0,
+    "precio_qq": 170.0
+  },
+  "regiones": [
+    {
+      "region": "Chiriqui",
+      "productores": 1372,
+      "ha_cosechar": 7714.0,
+      "rendimiento_qq_ha": 19.9
+    },
+    {
+      "region": "Veraguas",
+      "productores": 601,
+      "ha_cosechar": 698.0,
+      "rendimiento_qq_ha": 4.5
+    },
+    {
+      "region": "Herrera",
+      "productores": 115,
+      "ha_cosechar": 50.0,
+      "rendimiento_qq_ha": 10.0
+    },
+    {
+      "region": "Coclé",
+      "productores": 162,
+      "ha_cosechar": 152.0,
+      "rendimiento_qq_ha": 13.6
+    },
+    {
+      "region": "Panamá Oeste",
+      "productores": 92,
+      "ha_cosechar": 89.0,
+      "rendimiento_qq_ha": 8.0
+    },
+    {
+      "region": "Colón",
+      "productores": 1738,
+      "ha_cosechar": 1700.0,
+      "rendimiento_qq_ha": 12.0
+    },
+    {
+      "region": "Panamá Este",
+      "productores": 500,
+      "ha_cosechar": 425.0,
+      "rendimiento_qq_ha": 9.6
+    },
+    {
+      "region": "Bocas del Toro",
+      "productores": 8,
+      "ha_cosechar": 19.0,
+      "rendimiento_qq_ha": 10.0
+    },
+    {
+      "region": "Darién",
+      "productores": 350,
+      "ha_cosechar": 625.0,
+      "rendimiento_qq_ha": 11.9
+    },
+    {
+      "region": "Comarca Gnobe Buglé",
+      "productores": 301,
+      "ha_cosechar": 399.0,
+      "rendimiento_qq_ha": 8.0
+    }
+  ]
+}

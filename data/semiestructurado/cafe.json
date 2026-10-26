@@ -1,0 +1,52 @@
+{
+  "cultivo": "Café",
+  "sistema": "Tecnificado (robusta, año 5)",
+  "anio_agricola": "2025-2026",
+  "moneda": "B/.",
+  "fuente": {
+    "costos": "Costo-normativo-cafe-2025-2026.pdf, pág. 2 (robusta sin plátano)",
+    "regiones": "Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf, pág. 10"
+  },
+  "costo_ha": {
+    "total": 6476.19,
+    "rubros": {
+      "equipos_y_herramientas": 30.00,
+      "insumos": 1851.00,
+      "mano_de_obra": 3306.55,
+      "otros_gastos": 350.00,
+      "recargos": {
+        "asistencia_tecnica": 155.63,
+        "imprevisto": 276.88,
+        "seguro_agricola": 387.63,
+        "intereses": 118.50
+      }
+    },
+    "por_qq_cosechado": 42.86,
+    "nota_por_qq": "Cosecha (2,700) + transporte de cosecha (300) del año 5, entre 70 qq."
+  },
+  "ciclo_plantacion": [
+    {"anio": 1, "costo_ha": 7869.91, "rendimiento_qq_ha": 0},
+    {"anio": 2, "costo_ha": 4297.17, "rendimiento_qq_ha": 11},
+    {"anio": 3, "costo_ha": 5097.32, "rendimiento_qq_ha": 54},
+    {"anio": 4, "costo_ha": 5506.17, "rendimiento_qq_ha": 60},
+    {"anio": 5, "costo_ha": 6476.19, "rendimiento_qq_ha": 70}
+  ],
+  "analisis_economico": {
+    "rendimiento_esperado_qq_ha": 70,
+    "precio_qq": 170.0,
+    "costo_qq": 92.52,
+    "relacion_beneficio_costo": 1.84
+  },
+  "regiones": [
+    {"region": "Chiriquí", "productores": 1372, "ha_cosechar": 7714, "rendimiento_qq_ha": 19.9},
+    {"region": "Veraguas", "productores": 601, "ha_cosechar": 698, "rendimiento_qq_ha": 4.5},
+    {"region": "Herrera", "productores": 115, "ha_cosechar": 50, "rendimiento_qq_ha": 10.0},
+    {"region": "Coclé", "productores": 162, "ha_cosechar": 152, "rendimiento_qq_ha": 13.6},
+    {"region": "Panamá Oeste", "productores": 92, "ha_cosechar": 89, "rendimiento_qq_ha": 8.0},
+    {"region": "Colón", "productores": 1738, "ha_cosechar": 1700, "rendimiento_qq_ha": 12.0},
+    {"region": "Panamá Este", "productores": 500, "ha_cosechar": 425, "rendimiento_qq_ha": 9.6},
+    {"region": "Bocas del Toro", "productores": 8, "ha_cosechar": 19, "rendimiento_qq_ha": 10.0},
+    {"region": "Darién", "productores": 350, "ha_cosechar": 625, "rendimiento_qq_ha": 11.9},
+    {"region": "Comarca Ngäbe Buglé", "productores": 301, "ha_cosechar": 399, "rendimiento_qq_ha": 8.0}
+  ]
+}
