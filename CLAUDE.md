@@ -22,6 +22,8 @@ Todavía no hay tests ni comandos de build.
 - `semiestructurado/ia/*.json`: los mismos documentos extraídos por `scripts/extraer_json_pdf.py` (LangChain + Gemini, salida estructurada con Pydantic, `GOOGLE_API_KEY`, modelo en `GEMINI_MODEL`). Qué página y qué sistema de cultivo usar de cada PDF está en `FICHAS`. No guarda un JSON si los rubros no suman el total, y lo compara con el JSON a mano. El generador lee `semiestructurado/*.json` (no `ia/`); para usar los de la IA hay que copiarlos un nivel arriba.
 - `estructurado/clima_diario_2025_2026.csv`: clima diario real (Open-Meteo), mayo 2025–abril 2026, lo genera `scripts/descargar_clima.py`. Un punto por región (cabecera o sede regional, en `LOCALIZACIONES`); los nombres de región deben coincidir con los de los JSON.
 - `scripts/cargar_mongodb.py` carga en MongoDB (`MONGODB_URI`, `MONGODB_DB` en `.env`) las colecciones `fichas_cultivo` (JSON de `ia/` por defecto), `produccion_mensual` y `clima_diario`. Reemplaza la carga anterior.
+- `mongodb/transformar_kpi.py` ejecuta en orden de nombre los pipelines de agregación de `mongodb/pipelines/*.json` (`origen` + `pipeline` que termina en `$out`) y crea `clima_mensual`, `kpi_mensual`, `kpi_cultivo_region` y `kpi_cultivo`. `$sum` toma `null` como 0: el valor de producción se fuerza a `null` cuando no hay precio (maíz).
+- `scripts/pipeline.py` corre todo en orden (`--sin-ia` salta la extracción con Gemini).
 
 ## Entorno
 

@@ -1,0 +1,51 @@
+{
+  "descripcion": "KPI del año agrícola por cultivo, región y sistema, con el clima anual de la región. Compara regiones entre sí.",
+  "origen": "produccion_mensual",
+  "pipeline": [
+    {"$group": {
+      "_id": {"cultivo": "$cultivo", "region": "$region", "sistema": "$sistema"},
+      "ha": {"$sum": "$ha_cosechadas"},
+      "produccion_qq": {"$sum": "$produccion_qq"},
+      "costo_total": {"$sum": "$costo_total"},
+      "valor_produccion": {"$sum": "$valor_produccion"},
+      "precio_qq": {"$max": "$precio_qq"}
+    }},
+    {"$lookup": {
+      "from": "clima_mensual",
+      "localField": "_id.region",
+      "foreignField": "region",
+      "pipeline": [{"$group": {
+        "_id": null,
+        "lluvia_anual_mm": {"$sum": "$lluvia_mm"},
+        "dias_lluvia": {"$sum": "$dias_lluvia"},
+        "temp_media_c": {"$avg": "$temp_media_c"}
+      }}],
+      "as": "clima"
+    }},
+    {"$unwind": {"path": "$clima", "preserveNullAndEmptyArrays": true}},
+    {"$set": {
+      "costo_qq": {"$divide": ["$costo_total", "$produccion_qq"]},
+      "valor_produccion": {"$cond": [{"$eq": ["$precio_qq", null]}, null, "$valor_produccion"]}
+    }},
+    {"$project": {
+      "_id": 0,
+      "cultivo": "$_id.cultivo", "region": "$_id.region", "sistema": "$_id.sistema",
+      "ha": {"$round": ["$ha", 1]},
+      "produccion_qq": {"$round": ["$produccion_qq", 1]},
+      "rendimiento_qq_ha": {"$round": [{"$divide": ["$produccion_qq", "$ha"]}, 2]},
+      "costo_total": {"$round": ["$costo_total", 2]},
+      "costo_ha": {"$round": [{"$divide": ["$costo_total", "$ha"]}, 2]},
+      "costo_qq": {"$round": ["$costo_qq", 2]},
+      "precio_qq": 1,
+      "margen_qq": {"$round": [{"$subtract": ["$precio_qq", "$costo_qq"]}, 2]},
+      "valor_produccion": {"$round": ["$valor_produccion", 2]},
+      "margen_total": {"$round": [{"$subtract": ["$valor_produccion", "$costo_total"]}, 2]},
+      "rentabilidad_pct": {"$round": [{"$multiply": [{"$divide": [{"$subtract": ["$valor_produccion", "$costo_total"]}, "$costo_total"]}, 100]}, 1]},
+      "lluvia_anual_mm": {"$round": ["$clima.lluvia_anual_mm", 0]},
+      "dias_lluvia": "$clima.dias_lluvia",
+      "temp_media_c": {"$round": ["$clima.temp_media_c", 2]}
+    }},
+    {"$sort": {"cultivo": 1, "rendimiento_qq_ha": -1}},
+    {"$out": "kpi_cultivo_region"}
+  ]
+}

@@ -52,6 +52,15 @@ pip install -r requirements.txt
 
 El archivo `.env` no se sube a GitHub; cada integrante usa su propia key.
 
+## Todo de una vez (pipeline)
+
+Corre los pasos 3 a 7 en orden y se detiene si alguno falla:
+
+```powershell
+python scripts/pipeline.py           # todo
+python scripts/pipeline.py --sin-ia  # sin llamar a Gemini: usa los JSON de ia/ que ya existen
+```
+
 ## 3. Extraer los JSON de los PDF con IA
 
 ```powershell
@@ -92,6 +101,23 @@ python scripts/cargar_mongodb.py data/semiestructurado    # fichas copiadas a ma
 
 - Configurar `MONGODB_URI` y `MONGODB_DB` en `.env` (ver `.env.example`). Por defecto usa MongoDB local (`mongodb://localhost:27017`, base `agro_panama`).
 - Colecciones: `fichas_cultivo`, `produccion_mensual` y `clima_diario`. Se puede volver a correr: reemplaza la carga anterior.
+
+## 7. Calcular los KPI en MongoDB
+
+```powershell
+python mongodb/transformar_kpi.py
+```
+
+Ejecuta en orden los pipelines de agregación de `mongodb/pipelines/` (cada uno se puede pegar en MongoDB Compass):
+
+| Pipeline | Origen | Colección de salida |
+|---|---|---|
+| `01_clima_mensual.json` | `clima_diario` | `clima_mensual`: lluvia, días de lluvia y temperatura por región y mes |
+| `02_kpi_mensual.json` | `produccion_mensual` | `kpi_mensual`: producción, costos y margen de cada mes con el clima de ese mes |
+| `03_kpi_cultivo_region.json` | `produccion_mensual` | `kpi_cultivo_region`: rendimiento, costo/ha, costo/qq, margen y rentabilidad del año por cultivo y región, con el clima anual |
+| `04_kpi_cultivo.json` | `produccion_mensual` | `kpi_cultivo`: los mismos KPI a nivel nacional por cultivo |
+
+Los promedios se calculan con totales (p. ej. costo/qq = costo total / producción total), no promediando los meses. El maíz no tiene precio: su valor, margen y rentabilidad quedan en `null`.
 
 # Requisitos del proyecto final
 

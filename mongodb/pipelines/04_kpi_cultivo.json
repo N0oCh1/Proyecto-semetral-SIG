@@ -1,0 +1,37 @@
+{
+  "descripcion": "KPI nacionales por cultivo (año agrícola): superficie, producción, rendimiento, costo y margen.",
+  "origen": "produccion_mensual",
+  "pipeline": [
+    {"$group": {
+      "_id": {"cultivo": "$cultivo", "sistema": "$sistema"},
+      "regiones": {"$addToSet": "$region"},
+      "ha": {"$sum": "$ha_cosechadas"},
+      "produccion_qq": {"$sum": "$produccion_qq"},
+      "costo_total": {"$sum": "$costo_total"},
+      "valor_produccion": {"$sum": "$valor_produccion"},
+      "precio_qq": {"$max": "$precio_qq"}
+    }},
+    {"$set": {
+      "costo_qq": {"$divide": ["$costo_total", "$produccion_qq"]},
+      "valor_produccion": {"$cond": [{"$eq": ["$precio_qq", null]}, null, "$valor_produccion"]}
+    }},
+    {"$project": {
+      "_id": 0,
+      "cultivo": "$_id.cultivo", "sistema": "$_id.sistema",
+      "num_regiones": {"$size": "$regiones"},
+      "ha": {"$round": ["$ha", 1]},
+      "produccion_qq": {"$round": ["$produccion_qq", 1]},
+      "rendimiento_qq_ha": {"$round": [{"$divide": ["$produccion_qq", "$ha"]}, 2]},
+      "costo_total": {"$round": ["$costo_total", 2]},
+      "costo_ha": {"$round": [{"$divide": ["$costo_total", "$ha"]}, 2]},
+      "costo_qq": {"$round": ["$costo_qq", 2]},
+      "precio_qq": 1,
+      "margen_qq": {"$round": [{"$subtract": ["$precio_qq", "$costo_qq"]}, 2]},
+      "valor_produccion": {"$round": ["$valor_produccion", 2]},
+      "margen_total": {"$round": [{"$subtract": ["$valor_produccion", "$costo_total"]}, 2]},
+      "rentabilidad_pct": {"$round": [{"$multiply": [{"$divide": [{"$subtract": ["$valor_produccion", "$costo_total"]}, "$costo_total"]}, 100]}, 1]}
+    }},
+    {"$sort": {"cultivo": 1}},
+    {"$out": "kpi_cultivo"}
+  ]
+}
