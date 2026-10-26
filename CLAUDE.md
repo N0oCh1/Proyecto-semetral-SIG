@@ -23,7 +23,7 @@ Todavía no hay tests ni comandos de build.
 - `estructurado/clima_diario_2025_2026.csv`: clima diario real (Open-Meteo), mayo 2025–abril 2026, lo genera `scripts/descargar_clima.py`. Un punto por región (cabecera o sede regional, en `LOCALIZACIONES`); los nombres de región deben coincidir con los de los JSON.
 - `scripts/cargar_mongodb.py` carga en MongoDB (`MONGODB_URI`, `MONGODB_DB` en `.env`) las colecciones `fichas_cultivo` (JSON de `ia/` por defecto), `produccion_mensual` y `clima_diario`. Reemplaza la carga anterior.
 - `mongodb/transformar_kpi.py` ejecuta en orden de nombre los pipelines de agregación de `mongodb/pipelines/*.json` (`origen` + `pipeline` que termina en `$out`) y crea `clima_mensual`, `kpi_mensual`, `kpi_cultivo_region` y `kpi_cultivo`. `$sum` toma `null` como 0: el valor de producción se fuerza a `null` cuando no hay precio.
-- `scripts/exportar_postgres.py` copia las colecciones `kpi_*` y `clima_mensual` al esquema `agro` de PostgreSQL (Docker: `docker-compose.yml` + `postgres/`, credenciales `POSTGRES_*` en `.env`) y crea `agro.regiones` desde `LOCALIZACIONES`. Power BI lee de ahí porque el cluster gratuito de Atlas no tiene Atlas SQL.
+- `scripts/exportar_postgres.py` copia las colecciones `produccion_mensual`, `kpi_*` y `clima_mensual` al esquema `agro` de PostgreSQL (Docker: `docker-compose.yml` + `postgres/`, credenciales `POSTGRES_*` en `.env`) y crea `agro.regiones` desde `LOCALIZACIONES`. Power BI lee de ahí porque el cluster gratuito de Atlas no tiene Atlas SQL.
 - `scripts/pipeline.py` corre todo en orden (`--sin-ia` salta la extracción con Gemini).
 
 ## Entorno

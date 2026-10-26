@@ -143,7 +143,7 @@ docker compose up -d                  # si PostgreSQL no está levantado
 python scripts/exportar_postgres.py
 ```
 
-- Copia `kpi_cultivo`, `kpi_cultivo_region`, `kpi_mensual` y `clima_mensual` de MongoDB al esquema `agro` de PostgreSQL, y crea `agro.regiones` con la latitud y longitud de cada región (para el mapa). Reemplaza las tablas en cada corrida.
+- Copia `produccion_mensual`, `kpi_cultivo`, `kpi_cultivo_region`, `kpi_mensual` y `clima_mensual` de MongoDB al esquema `agro` de PostgreSQL, y crea `agro.regiones` con la latitud y longitud de cada región (para el mapa). Reemplaza las tablas en cada corrida.
 - En Power BI: **Obtener datos → Base de datos PostgreSQL**, servidor `localhost:5432`, base `agro_panama`, usuario y contraseña del `.env`; elegir las tablas `agro.*`. Relacionar las tablas por `region` con `agro.regiones`.
 
 # Requisitos del proyecto final

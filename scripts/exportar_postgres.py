@@ -1,4 +1,4 @@
-"""Copia las colecciones de KPI de MongoDB a PostgreSQL (esquema agro) para Power BI.
+"""Copia la producción mensual y las colecciones de KPI de MongoDB a PostgreSQL (esquema agro) para Power BI.
 
 El cluster gratuito de Atlas no tiene Atlas SQL, así que Power BI lee de PostgreSQL con su conector nativo.
 Cada tabla se reemplaza completa en cada corrida. Además crea agro.regiones con las coordenadas de
@@ -22,7 +22,7 @@ from descargar_clima import LOCALIZACIONES
 
 load_dotenv()
 
-COLECCIONES = ["kpi_cultivo", "kpi_cultivo_region", "kpi_mensual", "clima_mensual"]
+COLECCIONES = ["produccion_mensual", "kpi_cultivo", "kpi_cultivo_region", "kpi_mensual", "clima_mensual"]
 ESQUEMA = "agro"
 
 if __name__ == "__main__":
