@@ -1,5 +1,5 @@
 {
-  "descripcion": "KPI nacionales por cultivo (año agrícola): superficie, producción, rendimiento, costo y margen.",
+  "descripcion": "KPI nacionales por cultivo (año agrícola, suma de las regiones de Panamá; mercado interno, sin exportación): superficie, producción, rendimiento, costo y margen.",
   "origen": "produccion_mensual",
   "pipeline": [
     {"$group": {

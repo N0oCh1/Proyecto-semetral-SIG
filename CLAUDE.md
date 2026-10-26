@@ -14,7 +14,7 @@ Todavía no hay tests ni comandos de build.
 
 ## Datos (`data/`)
 
-- `Documento_referencia/*.pdf`: tablas del MIDA, año agrícola 2025–2026. Hay que extraerlas del PDF.
+- `Documento_referencia/*.pdf`: tablas del MIDA, año agrícola 2025–2026. Hay que extraerlas del PDF. Son de producción y mercado nacional (precios al productor), no de exportación.
   - `Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf`: por región y sistema de cultivo (productores, ha, qq, qq/ha). Son proyecciones, no cosechas reales. Arroz (pág. 1), maíz (pág. 2), café (pág. 10, dentro de "industriales"); el resto de rubros no se usa.
   - `Costo-normativo-*.pdf` / `Costos-de-arroz-*.pdf`: costo por hectárea (B/.). El maíz tiene dos sistemas; el arroz solo secano (con precio esperado 27 B/./qq); el café es robusta, con costos por año de plantación (1–5) y precio de 170 B/./qq.
 - `estructurado/produccion_mensual_2025_2026.csv`: **sintético**, un año agrícola (mayo 2025–abril 2026), lo genera `scripts/generar_datos_sinteticos.py` (semilla fija, ejecutar desde la raíz). Lee los valores base de `semiestructurado/*.json`; en el script solo queda el calendario de cosecha (`COSECHA`), que es un supuesto. El PDF del maíz no trae precio: `semiestructurado/maiz.json` usa 17 B/./qq (supuesto del grupo, mercado 15–18; ver `fuente.precio`), mientras que `ia/maiz.json` queda en `null` como en el PDF. Por eso la comparación de `extraer_json_pdf.py` marca esa diferencia.

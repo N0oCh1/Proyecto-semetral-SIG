@@ -117,6 +117,8 @@ Ejecuta en orden los pipelines de agregación de `mongodb/pipelines/` (cada uno 
 | `03_kpi_cultivo_region.json` | `produccion_mensual` | `kpi_cultivo_region`: rendimiento, costo/ha, costo/qq, margen y rentabilidad del año por cultivo y región, con el clima anual |
 | `04_kpi_cultivo.json` | `produccion_mensual` | `kpi_cultivo`: los mismos KPI a nivel nacional por cultivo |
 
+**Alcance:** los informes del MIDA son de producción y mercado **nacional** (Panamá), no de exportación. "Nacional" en `kpi_cultivo` es la suma de las regiones del país, y los precios son precios al productor en el mercado interno, no precios internacionales.
+
 Los promedios se calculan con totales (p. ej. costo/qq = costo total / producción total), no promediando los meses. Si un cultivo no tiene precio, su valor, margen y rentabilidad quedan en `null`. El precio del maíz (17 B/./qq) no viene del PDF: es un supuesto del grupo dentro del rango de mercado de 15–18 B/./qq, anotado en `data/semiestructurado/maiz.json`.
 
 # Requisitos del proyecto final
