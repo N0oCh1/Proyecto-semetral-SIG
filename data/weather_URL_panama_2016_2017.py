@@ -16,8 +16,8 @@ def obtener_clima():
   params = {
     "latitude": 9,
     "longitude": -80,
-    "start_date": "2016-01-05",
-    "end_date": "2017-12-19",
+    "start_date": "2011-01-01",
+    "end_date": "2023-12-30",
     "daily": ["sunrise", "precipitation_hours", "temperature_2m_max", "temperature_2m_min", "weather_code"],
     "timezone": "auto",
   }

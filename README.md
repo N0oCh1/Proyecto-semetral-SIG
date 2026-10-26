@@ -10,15 +10,21 @@
 
 # Tema elegido para el proyecto 
 
-¿Cómo cambia la demanda turística por temporada?
+Sector agropecuario: ¿Cómo varían los costos y la productividad de los cultivos?
 
-# Ecenario
+# Escenario
 
-como empresa para medir la satisfaccion, se quiere medir la satisfaccion de los turista que viajan en Panama. en los diferenete periodo del 2016 - 2017 mensualemente y definir que tipo de clima hubo en ese momento y si el clima afecta a la cantidad de turista que haya.
+Como empresa del sector agropecuario en Panamá, se quiere comparar los costos de producción y la productividad (rendimiento por hectárea) de **maíz, arroz y café** en el año agrícola 2025–2026, por región y por sistema de cultivo, cruzarlos con el clima de cada región y ver si el clima afecta a la productividad y al costo por quintal.
 
-## que contendra
+## Qué contendrá
 
-se va a querer medir la satisfaccion de los turista en los hoteles en panama, como no hay datos de review en panama se usara un dataset con esos comentarios 
+- Tablas en PDF del MIDA, año agrícola 2025–2026 (`data/no_estructurado/`):
+  - `Proyecciones-de-Siembra-y-Cosecha-2025-2026.pdf`: productores, superficie, producción (qq) y rendimiento (qq/ha) por región y sistema de cultivo. Son **proyecciones**, no cosechas reales.
+  - `Costo-normativo-maiz-2025-026.pdf`: costo por hectárea del maíz mecanizado y a chuzo con tecnología (y del sorgo, que no se usa).
+  - `Costos-de-arroz-mecanizado-en-secano-2025-2026.pdf`: costo por hectárea, rendimiento y precio esperados del arroz en secano.
+  - `Costo-normativo-cafe-2025-2026.pdf`: costo por hectárea del café robusta en sus primeros 5 años, solo y asociado con plátano.
+- Datos sintéticos mensuales 2024–2025 (`data/estructurado/produccion_mensual_2024_2025.csv`), generados con `python scripts/generar_datos_sinteticos.py` a partir de los PDF: hectáreas, rendimiento, producción, costos, precio y margen por región, cultivo y mes. La superficie anual es la del MIDA; el reparto mensual (calendario de cosecha) y la variación del rendimiento y del costo son simulados.
+- Clima diario de Panamá (`data/weather_URL_panama_2016_2017.py`, API de Open-Meteo).
 
 # Requisitos del proyecto final
 
@@ -28,29 +34,29 @@ Resumen de lo que pide el documento *Proyecto Final de Sistemas de Información 
 
 ## Equipo y roles
 
-- [ ] Asignar a cada integrante un rol dentro del sector turismo, con capacidad de tomar decisiones.
+- [ ] Asignar a cada integrante un rol dentro del sector agropecuario, con capacidad de tomar decisiones.
 - [ ] El liderazgo lo ejerce el **Director(a) de Tecnología**.
 - [ ] De 1 a 2 integrantes forman parte del equipo de TI.
 
 ## Requisitos tecnológicos
 
 - [ ] Gestionar **al menos 3 tipos de datos distintos** en estructura y formato. Lo que ya se tiene:
-  - Datos tabulares: estadística mensual de hoteles de Panamá (`data/hoteles_panama_2016_2017.csv`, extraída del PDF `A3612017_hoteles.pdf`).
-  - Texto no estructurado: reseñas de hoteles (`data/tripadvisor_reviews_fechadas.csv`, fechas simuladas).
-  - Clima por periodo (pendiente; por ejemplo, datos JSON de una API).
+  - No estructurado: PDF del MIDA con las proyecciones y los costos (`data/no_estructurado/`).
+  - Semiestructurado: JSON del clima de la API de Open-Meteo (`data/weather_URL_panama_2016_2017.py`).
+  - Estructurado (pendiente): por ejemplo, la serie histórica de producción del INEC en CSV o Excel.
 - [ ] Orquestación de procesos de datos.
 - [ ] Integración con **AWS o MongoDB**.
-- [ ] Inteligencia artificial generativa u otra técnica de IA (por ejemplo, análisis de sentimiento de las reseñas).
+- [ ] Inteligencia artificial generativa u otra técnica de IA (por ejemplo, predecir el rendimiento de un cultivo según el clima).
 - [ ] Prácticas de automatización en el área de negocio.
 - [ ] Dashboard con los principales indicadores del negocio.
 
 ## Componentes mínimos
 
 1. [ ] **Problema gerencial:** describir qué decisión necesita mejorar la organización.
-2. [ ] **Fuentes de datos:** datos abiertos, CSV, bases de datos o datos sintéticos **documentados**. Las reseñas no son de Panamá y sus fechas son simuladas; esto se debe declarar.
+2. [ ] **Fuentes de datos:** datos abiertos, CSV, bases de datos o datos sintéticos **documentados**. Si se usan datos sintéticos de cultivos, se debe declarar.
 3. [ ] **Pipeline de datos:** extracción, limpieza, transformación y almacenamiento.
 4. [ ] **Base de datos:** estructurar los datos con SQL u otra tecnología apropiada.
-5. [ ] **Análisis gerencial:** KPI, tendencias y comparaciones (por ejemplo: ocupación, pernoctaciones, satisfacción promedio por mes y temporada, relación con el clima).
+5. [ ] **Análisis gerencial:** KPI, tendencias y comparaciones (por ejemplo: rendimiento por hectárea, costo por hectárea, costo por quintal, margen por quintal, comparación por cultivo, región y sistema de cultivo, relación con el clima).
 6. [ ] **Visualización:** dashboard interactivo en Power BI o herramienta equivalente.
 7. [ ] **Recomendaciones:** interpretar los resultados y proponer decisiones basadas en evidencia.
 8. [ ] **Riesgos:** evaluar los riesgos de las decisiones tomadas.
@@ -99,5 +105,5 @@ Resumen de lo que pide el documento *Proyecto Final de Sistemas de Información 
 ## Notas del documento
 
 - Con datos reales de Panamá, priorizar fuentes abiertas y verificar sus condiciones de uso. Los datos sintéticos solo se permiten con fines académicos.
-- Si se toma un repositorio de referencia (por ejemplo, *Tourism Analytics Dashboard*), verificar que esté disponible, revisar su README, comprobar que tenga datos y código ejecutable, e identificar su licencia.
+- Si se toma un repositorio de referencia (por ejemplo, *Agricultural Data Dashboard* o *Farm Analytics Dashboard*), verificar que esté disponible, revisar su README, comprobar que tenga datos y código ejecutable, e identificar su licencia.
 - **El objetivo no es copiar un proyecto**, sino adaptar una solución al problema gerencial, construir el pipeline, definir indicadores y generar recomendaciones basadas en los resultados.
