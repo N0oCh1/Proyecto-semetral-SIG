@@ -160,23 +160,23 @@ Resumen de lo que pide el documento *Proyecto Final de Sistemas de Información 
 
 ## Requisitos tecnológicos
 
-- [ ] Gestionar **al menos 3 tipos de datos distintos** en estructura y formato. Lo que ya se tiene:
+- [x] Gestionar **al menos 3 tipos de datos distintos** en estructura y formato. Lo que ya se tiene:
   - No estructurado: PDF del MIDA con las proyecciones y los costos (`data/Documento_referencia/`).
   - Semiestructurado: un JSON por cultivo con los valores de los PDF (`data/semiestructurado/`): costo por hectárea desglosado por rubro, análisis económico y superficie y rendimiento por región. Cada cultivo tiene su propia forma (el café trae el ciclo de 5 años; el maíz, otros sistemas).
   - Estructurado: CSV mensual generado a partir de los JSON (`data/estructurado/produccion_mensual_2025_2026.csv`) y CSV de clima diario por región (`data/estructurado/clima_diario_2025_2026.csv`).
-- [ ] Orquestación de procesos de datos.
-- [ ] Integración con **AWS o MongoDB**.
-- [ ] Inteligencia artificial generativa u otra técnica de IA (por ejemplo, predecir el rendimiento de un cultivo según el clima).
-- [ ] Prácticas de automatización en el área de negocio.
+- [x] Orquestación de procesos de datos.
+- [x] Integración con **AWS o MongoDB**.
+- [x] Inteligencia artificial generativa u otra técnica de IA (por ejemplo, predecir el rendimiento de un cultivo según el clima).
+- [x] Prácticas de automatización en el área de negocio.
 - [ ] Dashboard con los principales indicadores del negocio.
 
 ## Componentes mínimos
 
 1. [ ] **Problema gerencial:** describir qué decisión necesita mejorar la organización.
-2. [ ] **Fuentes de datos:** datos abiertos, CSV, bases de datos o datos sintéticos **documentados**. Si se usan datos sintéticos de cultivos, se debe declarar.
-3. [ ] **Pipeline de datos:** extracción, limpieza, transformación y almacenamiento.
-4. [ ] **Base de datos:** estructurar los datos con SQL u otra tecnología apropiada.
-5. [ ] **Análisis gerencial:** KPI, tendencias y comparaciones (por ejemplo: rendimiento por hectárea, costo por hectárea, costo por quintal, margen por quintal, comparación por cultivo, región y sistema de cultivo, relación con el clima).
+2. [x] **Fuentes de datos:** datos abiertos, CSV, bases de datos o datos sintéticos **documentados**. Si se usan datos sintéticos de cultivos, se debe declarar.
+3. [x] **Pipeline de datos:** extracción, limpieza, transformación y almacenamiento.
+4. [x] **Base de datos:** estructurar los datos con SQL u otra tecnología apropiada.
+5. [x] **Análisis gerencial:** KPI, tendencias y comparaciones (por ejemplo: rendimiento por hectárea, costo por hectárea, costo por quintal, margen por quintal, comparación por cultivo, región y sistema de cultivo, relación con el clima).
 6. [ ] **Visualización:** dashboard interactivo en Power BI o herramienta equivalente.
 7. [ ] **Recomendaciones:** interpretar los resultados y proponer decisiones basadas en evidencia.
 8. [ ] **Riesgos:** evaluar los riesgos de las decisiones tomadas.
